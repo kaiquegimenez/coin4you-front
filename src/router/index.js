@@ -15,26 +15,26 @@ const routes = [
   //   name: 'Notifications',
   //   component: () => import(/* webpackChunkName: "about" */ '../views/Notifications.vue')
   // },
-  // {
-  //   path: '/store',
-  //   name: 'Store',
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/Store.vue')
-  // },
+  {
+    path: '/store',
+    name: 'Store',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Store.vue')
+  },
   {
     path: '/',
     name: 'Login',
     component: () => import('../views/Login.vue')
   },
-  // {
-  //   path: '/editUsers',
-  //   name: 'EditUsers',
-  //   component: () => import('../views/EditUsers.vue')
-  // },
-  // {
-  //   path: '/editProducts',
-  //   name: 'EditProducts',
-  //   component: () => import('../views/EditProducts.vue')
-  // },
+  {
+    path: '/editUsers',
+    name: 'EditUsers',
+    component: () => import('../views/EditUsers.vue')
+  },
+  {
+    path: '/editProducts',
+    name: 'EditProducts',
+    component: () => import('../views/EditProducts.vue')
+  },
 ]
 
 const router = new VueRouter({
