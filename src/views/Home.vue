@@ -72,6 +72,13 @@
               </div>
             </div>
           </div>
+          <div @click="logout()" class="list__container">
+            <div class="list__user-data list__user-data--logout">
+              <div>
+                Sair do App
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </transition>
@@ -151,6 +158,11 @@ export default {
     },
     confirmEdit() {
       this.getUser()
+    },
+    logout() {
+      /* eslint-disable no-debugger */
+      localStorage.clear('token');
+      this.$router.push('/');
     }
   },
 };
@@ -272,6 +284,9 @@ export default {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    &--logout {
+      color: #f3c011;
+    }
   }
 
   &__menu {
