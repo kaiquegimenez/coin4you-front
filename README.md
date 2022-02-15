@@ -7,7 +7,7 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm start
+npm serve
 ```
 
 ### Compiles and minifies for production
@@ -15,10 +15,7 @@ npm start
 npm build
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-### Logar como ADM
+### Logar como Administrador
 ```
 E-mail: kaique@mail.com
 Senha: 123
