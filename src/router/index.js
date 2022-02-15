@@ -40,10 +40,15 @@ const routes = [
     component: () => import('../views/EditProducts.vue'),
     beforeEnter: checkAuth,
   },
+  { 
+    path: '*',
+    name: 'PageNotFound',
+    component: () => import('../views/PageNotFound.vue')
+  }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })

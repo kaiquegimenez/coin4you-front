@@ -25,6 +25,11 @@ export default {
       password: "",
     };
   },
+  mounted() {
+    if(localStorage.getItem('token')) {
+      this.$router.push("home");
+    }
+  },
   methods: {
     login() {
       axios
@@ -37,7 +42,7 @@ export default {
             console.log(res.data.user);
             localStorage.setItem("token", res.data.user.token);
             localStorage.setItem("user", JSON.stringify(res.data.user));
-            this.$router.push("Home");
+            this.$router.push("home");
           } else {
             console.log(res.data.message);
           }
