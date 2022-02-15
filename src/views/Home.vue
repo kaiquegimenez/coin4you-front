@@ -131,6 +131,9 @@ export default {
           }
         })
         .catch((err) => {
+          if(err.message.includes('401')) {
+            this.$router.push('/')
+          }
           console.log(err);
         });
     },
@@ -143,6 +146,9 @@ export default {
           }
         })
         .catch((err) => {
+          if(err.message.includes('401')) {
+            this.$router.push('/')
+          }
           console.log(err);
         });
     },
