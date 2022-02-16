@@ -8,17 +8,20 @@ const routes = [
   {
     path: '/home',
     name: 'Home',
-    component: Home
+    component: Home,
+    beforeEnter: checkAuth,
   },
   // {
   //   path: '/notifications',
   //   name: 'Notifications',
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/Notifications.vue')
+  //   component: () => import('../views/Notifications.vue'),
+  //   beforeEnter: checkAuth,
   // },
   {
     path: '/store',
     name: 'Store',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Store.vue')
+    component: () => import('../views/Store.vue'),
+    beforeEnter: checkAuth,
   },
   {
     path: '/',
@@ -28,13 +31,20 @@ const routes = [
   {
     path: '/editUsers',
     name: 'EditUsers',
-    component: () => import('../views/EditUsers.vue')
+    component: () => import('../views/EditUsers.vue'),
+    beforeEnter: checkAuth,
   },
   {
     path: '/editProducts',
     name: 'EditProducts',
-    component: () => import('../views/EditProducts.vue')
+    component: () => import('../views/EditProducts.vue'),
+    beforeEnter: checkAuth,
   },
+  { 
+    path: '*',
+    name: 'PageNotFound',
+    component: () => import('../views/PageNotFound.vue')
+  }
 ]
 
 const router = new VueRouter({
@@ -42,5 +52,15 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+function checkAuth (to, from, next) {
+  if (localStorage.getItem('token')) {
+    next()
+  } else if (!localStorage.getItem('token')) {
+    next('/')
+  } else {
+    next('/')
+  }
+}
 
 export default router

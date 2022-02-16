@@ -38,7 +38,10 @@ export default{
           }
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err.message);
+          if(err.message.includes('401')) {
+            this.$router.push('/')
+          }
         });
     }
   }

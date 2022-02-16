@@ -79,6 +79,9 @@ export default {
         })
         .catch((err) => {
           console.log(err);
+          if(err.message.includes('401')) {
+            this.$router.push('/')
+          }
         });
     },
     editProduct(){
