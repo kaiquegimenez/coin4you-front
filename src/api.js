@@ -9,6 +9,7 @@ const api = axios.create({
       return config;
     },
     (error) => {
+      /* eslint-disable */
       return Promise.reject(error);
     }
   );

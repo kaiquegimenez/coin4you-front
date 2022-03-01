@@ -1,0 +1,32 @@
+/*
+  * Positions
+*/
+.absolute {
+  position: absolute;
+}
+.relative {
+  position: relative;
+}
+.fixed {
+  position: fixed;
+}
+
+/*
+  * Text Align
+*/
+$textAligns: "left", "center", "right";
+@each $align in $textAligns {
+  .text-#{$align} {
+    text-align: #{$align};
+  }
+}
+
+/*
+  * Element position
+*/
+$elementPositions: "left", "bottom", "right", "top";
+@each $pos in $elementPositions {
+  .#{$pos} {
+    #{$pos}: 0;
+  }
+}

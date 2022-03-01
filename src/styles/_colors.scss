@@ -1,0 +1,84 @@
+/* COLORS PALETTE */
+$colors: (
+  "white": #FFFFFF,
+  "light": #FAFAFA,
+  "black": #333333,
+  "light-blue": #1A95F3,
+  "blue": #267bcf,
+  "red": #F52C6A,
+  "red-2": #FF0008,
+  "yellow": #FDC85C,
+  "amber": #FDC044,
+  "mustard": #FCB92F,
+  "orange": #f38562,
+  "green": #2B9D53,
+  "light-green": #AFE59C,
+  "light-green-2": #AFE59C,
+  "grey": #606060,
+  "grey-2": #808080,  
+  "grey-3": #a7a7a7,  
+  "grey-4": #D3D3D3,  
+  "grey-5": #D8D8D8,  
+  "grey-6": #979797,  
+  "grey-7": #BABABA,  
+  "grey-8": #ACACAC,  
+  "grey-9": #9C9C9C,  
+  "grey-10": #8A8A8A,  
+  "grey-11": #D5D5D5,
+  "light-grey-1": #FAFAFA,  
+  "light-grey-2": #EDEDED,  
+  "light-grey-3": #00000021,  
+  "light-grey-4": #E7EAF3,  
+  "light-grey-5": #FEFEFE,
+  "light-grey-6": #FDFDFD, 
+  "cor-do-alex": #1A9AFC72,
+);
+
+/*
+  - CLASS DEFINITION
+  - Example after each:
+  .bg-amber: {
+    background-color: #FDC044;
+  }
+*/
+@each $name, $color in $colors {
+  .bg-#{$name} {
+    background-color: #{$color};
+  }
+  .text-#{$name} {
+    color: #{$color};
+  }
+  .border-#{$name} {
+    border: solid 1px #{$color};
+  }
+  .borxer-x-#{$name} {
+    border-left-color: #{$color};
+    border-right-color: #{$color};
+  }
+  .borxer-y-#{$name} {
+    border-top-color: #{$color};
+    border-bottom-color: #{$color};
+  }
+
+  .border-#{$name} {
+    border: 1px solid #{$color};
+  }
+}
+
+/*
+  - GET COLOR IN COLOR LIST
+  - Example:
+  .circle {
+    border-bottom: solid 4px color(amber);
+  }
+*/
+@function color($name){
+  @if not map-get($colors, $name+''){
+      @error "Color `#{$name}` not found in map $colors";
+  }
+  @return map-get($colors, $name);
+}
+
+.grayer {
+  filter: grayscale(100%);
+}

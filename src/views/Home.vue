@@ -82,6 +82,13 @@
         </div>
       </div>
     </transition>
+    <Toast
+      :type="typeToast"
+      :message="message"
+      :visible="showToast"
+      :duration="3500"
+      @close="false"
+    ></Toast>
     <Footer />
     <Dialog :userId="user.id" :person="person" @confirmEdit="confirmEdit" @close="showModal = false" v-if="showModal" />
     <DialogEdit @confirmEdit="confirmEdit" @close="showDialogEditUser= false" v-if="showDialogEditUser" type="user" :data="user" title="Editar Usuário"/>
@@ -93,7 +100,8 @@ import Dialog from "../components/Dialog.vue";
 import ListPersons from "../components/ListPersons.vue";
 import Footer from "../components/Footer.vue";
 import Header from "../components/Header.vue";
-import DialogEdit from '../components/DialogEdit.vue'
+import DialogEdit from '../components/DialogEdit.vue';
+import Toast from '../components/Toast.vue'
 import api from "../api";
 export default {
   components: {
@@ -101,7 +109,8 @@ export default {
     Footer,
     Header,
     Dialog,
-    DialogEdit
+    DialogEdit,
+    Toast
   },
   data() {
     return {
@@ -110,10 +119,11 @@ export default {
       showModal: false,
       person: {},
       showMenu: false,
-      message: '',
-      visibleAlert: false,
       showDialogEditUser: false,
       isAdmin: false,
+      message: '',
+      showToast: false,
+      typeToast: ''
     };
   },
   mounted() {
@@ -123,30 +133,38 @@ export default {
   },
   methods: {
     getUser() {
-      return api
-        .get("https://back-coin.herokuapp.com/users")
+      return api.get("https://back-coin.herokuapp.com/users")
         .then((res) => {
           if (res.status === 200) {
             this.user = res.data;
           }
-        })
-        .catch((err) => {
+        }).catch((err) => {
+          this.$store.dispatch('toast/changeVisible', true)
+          this.$store.dispatch('toast/changeMessage', 'Erro ao buscar os seus dadaos!')
+          this.$store.dispatch('toast/changeType', 'danger')
           if(err.message.includes('401')) {
+            /* eslint-disable */
+            localStorage.clear('token');
+            localStorage.clear('user');
             this.$router.push('/')
           }
           console.log(err);
         });
     },
     getListUsers() {
-      return api
-        .get("https://back-coin.herokuapp.com/list/users")
+      return api.get("https://back-coin.herokuapp.com/list/users")
         .then((res) => {
           if (res.status === 200) {
             this.persons = res.data;
           }
-        })
-        .catch((err) => {
+        }).catch((err) => {
+          this.$store.dispatch('toast/changeVisible', true)
+          this.$store.dispatch('toast/changeMessage', 'Erro ao buscar os dados dos usuários!')
+          this.$store.dispatch('toast/changeType', 'danger')
           if(err.message.includes('401')) {
+            /* eslint-disable */
+            localStorage.clear('token');
+            localStorage.clear('user');
             this.$router.push('/')
           }
           console.log(err);
@@ -166,10 +184,13 @@ export default {
       this.getUser()
     },
     logout() {
-      /* eslint-disable no-debugger */
+      /* eslint-disable */
+      this.typeToast = 'success';
+      this.showToast = true;
+      this.message = 'Logout realizado com sucesso!';
       localStorage.clear('token');
       this.$router.push('/');
-    }
+    },
   },
 };
 </script>

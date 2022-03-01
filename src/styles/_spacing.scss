@@ -1,0 +1,50 @@
+/*
+  * MARGIN E PADDING CLASSES
+  * $progressive define o valor adicional pra cara tamanho
+  * Exemplo depois do each:
+  .ml-1 {
+    margin-left: 6px;
+  }
+  .my-2 {
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+  .pa-3 {
+    padding: 18px;
+  }
+*/
+@for $i from 1 through 25 {
+  $progressive: 6;
+  $spacing: #{$i * $progressive + "px"};
+
+  $spacingTypes: (
+    "m": "margin",
+    "p": "padding",
+  );
+
+  @each $type, $name in $spacingTypes {
+    .#{$type}a-#{$i} {
+      #{$name}: #{$spacing};
+    }
+    .#{$type}x-#{$i} {
+      #{$name + '-right'}: #{$spacing};
+      #{$name + '-left'}: #{$spacing};
+    }
+    .#{$type}y-#{$i} {
+      #{$name + '-top'}: #{$spacing};
+      #{$name + '-bottom'}: #{$spacing};
+    }
+    .#{$type}r-#{$i} {
+      #{$name + '-right'}: #{$spacing};
+    }
+    .#{$type}l-#{$i} {
+      #{$name + '-left'}: #{$spacing};
+    }
+    .#{$type}t-#{$i} {
+      #{$name + '-top'}: #{$spacing};
+    }
+    .#{$type}b-#{$i} {
+      #{$name + '-bottom'}: #{$spacing};
+    }
+  }
+}
