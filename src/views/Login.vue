@@ -13,12 +13,18 @@
       />
       <button class="button" @click="login()">Entrar</button>
     </div>
+    <Toast :duration="3500"></Toast>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Toast from '../components/Toast.vue'
+import { mapState } from 'vuex'
 export default {
+  components: {
+    Toast
+  },
   data() {
     return {
       email: "",
@@ -30,6 +36,9 @@ export default {
       this.$router.push("home");
     }
   },
+  computed: {
+    ...mapState('toast', ['message', 'visible', 'type']),
+  },
   methods: {
     login() {
       axios
@@ -39,19 +48,24 @@ export default {
         })
         .then((res) => {
           if (res.data.success) {
-            console.log(res.data.user);
+            this.$store.dispatch('toast/changeVisible', true)
+            this.$store.dispatch('toast/changeMessage', 'Login realizado com sucesso')
+            this.$store.dispatch('toast/changeType', 'success')
             localStorage.setItem("token", res.data.user.token);
             localStorage.setItem("user", JSON.stringify(res.data.user));
             this.$router.push("home");
           } else {
+            this.message = 'Erro ao fazer login. Confira seu usuário e senha!';
+            this.showToast = true;
+            this.typeToast = 'warning';
             console.log(res.data.message);
           }
         })
         .catch((err) => {
           console.log(err);
-          if (err.message.includes("401")) {
-            this.$router.push("/");
-          }
+          this.message = 'Erro ao fazer login';
+          this.showToast = true;
+          this.typeToast = 'danger';
         });
     },
   },

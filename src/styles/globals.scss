@@ -1,0 +1,124 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
+@import "colors";
+@import "flex";
+@import "sizes";
+@import "spacing";
+@import "align";
+@import "animations";
+
+* {
+  border: 0;
+  outline: 0;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  touch-action: manipulation;
+}
+
+html body {
+  height: 100vh;
+}
+
+hr {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+
+/* UTILS */
+.no-bg {
+  background: none !important;
+}
+
+.no-user-select {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.font-button { /* modais usam texto fonte 11 nos botões */
+  font-size: 12px;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+/* CARD CLASS */
+.card-style {
+  background: #ffffff;
+  box-shadow: 0 0 64pt 0 #161c2d0d;
+  -moz-box-shadow: 0 0 64pt 0 #161c2d0d;
+  -webkit-box-shadow: 0 0 64pt 0 #161c2d0d;
+  border-radius: 8pt;
+  border: solid 1pt #E7EAF3;
+}
+
+.custom-menu-spacing {
+  height: 44px;
+}
+
+/* DEFAULT ELEMENTS */
+button {
+  &:hover {
+    filter: brightness(110%);
+  }
+
+  &.disable {
+    filter: opacity(0.74);
+    cursor: no-drop;
+  }
+}
+
+.disable-events {
+  filter: opacity(0.5);
+  cursor: no-drop;
+  pointer-events: none;
+}
+
+.bottom {
+  position: fixed;
+  bottom: 0;
+}
+/* Configurações da scrollbar */
+::-webkit-scrollbar {
+  width: 1px;
+  height: 1px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+  
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+.grecaptcha-badge { 
+  visibility: hidden !important;
+  opacity: 0 !important;
+}

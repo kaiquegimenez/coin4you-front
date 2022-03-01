@@ -1,0 +1,85 @@
+/*
+  * BORDER-RADIUS
+  * Exemplo depois do each:
+  .radius-1 {
+    border-radius: 0.2em;
+  }
+*/
+@for $i from 1 through 10 {
+  $value: $i * 0.2em;
+  .radius-#{$i} {
+    border-radius: $value !important;
+  }
+}
+
+.radius-full {
+  border-radius: 50%;
+}
+
+/*
+  * WIDTH E HEIGHT
+  * Classe a cada 5%
+  * Exemplo depois do for:
+  .w-35 {
+    width: 35%;
+  }
+*/
+@for $i from 1 through 20 {
+  $progressive: 5;
+
+  .w-#{$i * $progressive} {
+    width: #{$i * $progressive + "%"};
+  }
+
+  .h-#{$i * $progressive} {
+    height: #{$i * $progressive + "vh"};
+  }
+}
+
+/*
+  * FONT-SIZE
+  * Começa em 10px e sobe 2px a cada vez
+  * Exemplo depois do for:
+  .font-0 {
+    font-size: 10px;
+  }
+  .font-1 {
+    font-size: 12px;
+  }
+  .font-2 {
+    font-size: 14px;
+  }
+*/
+@for $i from 5 through 15 {
+  $progressive: 2.2;
+
+  .font-#{$i - 5} {
+    font-size: #{$progressive * $i + "px"};
+  }
+}
+
+/*
+  FONT WEIGHT
+  Exemplo depois do for:
+  .weight-300 {
+    font-weight: 300;
+  }
+*/
+@for $i from 3 through 7 {
+  .weight-#{$i * 100} {
+    font-weight: #{$i * 100};
+  }
+}
+
+/*
+  WIDTH DA SIDEBAR
+*/
+$sidebar-width: 274px;
+
+.limit-size-desktop {
+  @media (min-width: 800px) {
+    width: 90%;
+    max-width: 1260px;
+    margin: 0 auto;
+  }
+}
