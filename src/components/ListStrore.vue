@@ -25,19 +25,24 @@
         <img src="../assets/icons/delete.svg" width="24px" height="24px" alt="">
       </button>
     </div>
-    <DialogEdit @confirmEdit="confirmEdit" @close="showDialogProduct= false" v-if="showDialogProduct" :data="product" title="Editar Produto" type="product"/>
-    <ConfirmDialog :product="product" @close="showModal = false" v-if="showModal"/>
+    <Toast :duration="3500" @close="false"></Toast>
+    <DialogEdit @confirmEditProduct="confirmEditProduct" @close="showDialogProduct= false" v-if="showDialogProduct" :data="product" title="Editar Produto" type="product"/>
+    <ConfirmDialog @confirmBuy="confirmBuy" :product="product" @close="showModal = false" v-if="showModal"/>
   </div>
 </template>
 <script>
 import ConfirmDialog from '../components/ConfirmDialog.vue'
 import DialogEdit from '../components/DialogEdit.vue'
-import api from '../api'
+import api from '../api';
+import Toast from '../components/Toast.vue';
+
+
 export default {
   name: 'ListStore',
   components: {
     ConfirmDialog,
-    DialogEdit
+    DialogEdit,
+    Toast
   },
   data() {
     return {
@@ -62,34 +67,97 @@ export default {
     }
   },
 
+  mounted() {
+    this.idUser = JSON.parse(localStorage.getItem('user')).id
+  },
+
   methods: {
     buyItem() {
       this.showModal = true;
     },
-    deleteProduct() {
-      const id = this.product.id
-      return api.put("https://back-coin.herokuapp.com/delete/product", {id})
+
+    confirmEditProduct(product) {
+      /* eslint-disable no-debugger */
+      return api.put("https://back-coin.herokuapp.com/adm/product", {id: this.product.id, nome: product.nameProduct, valor: product.value, descricao: product.description})
         .then((res) => {
           if (res.data.success) {
+            console.log(res.data.message)
+            this.$store.dispatch('toast/changeVisible', true)
+            this.$store.dispatch('toast/changeMessage', res.data.message)
+            this.$store.dispatch('toast/changeType', 'success')
             this.$emit('getProducts');
-            console.log(res.data.message);
           } else {
-            console.log('Não foi possível deletar');
+            this.$store.dispatch('toast/changeVisible', true)
+            this.$store.dispatch('toast/changeMessage', res.data.message)
+            this.$store.dispatch('toast/changeType', 'warning')
           }
         })
         .catch((err) => {
+          console.log(err);
+          this.$store.dispatch('toast/changeVisible', true)
+          this.$store.dispatch('toast/changeMessage', err.data.message)
+          this.$store.dispatch('toast/changeType', 'danger')
+          if(err.message.includes('401')) {
+            this.$router.push('/')
+          }
+        });
+    },
+
+    editProduct(){
+      this.showDialogProduct = true
+    },
+
+    confirmBuy(){
+      /* eslint-disable no-debugger */
+      return api.post("https://back-coin.herokuapp.com/coins/changes", {idProduto: this.product.id, idUsuario: this.idUser })
+        .then((res) => {
+          if (res.data.success) {
+            this.$store.dispatch('toast/changeVisible', true)
+            this.$store.dispatch('toast/changeMessage', 'Item comprado!')
+            this.$store.dispatch('toast/changeType', 'success')
+          } else {
+            this.$store.dispatch('toast/changeVisible', true)
+            this.$store.dispatch('toast/changeMessage', 'Não foi possível comprar o item!')
+            this.$store.dispatch('toast/changeType', 'warning')
+          }
+        })
+        .catch((err) => {
+          this.$store.dispatch('toast/changeVisible', true)
+          this.$store.dispatch('toast/changeMessage', 'Não foi possível comprar o item!')
+          this.$store.dispatch('toast/changeType', 'danger')
           console.log(err);
           if(err.message.includes('401')) {
             this.$router.push('/')
           }
         });
     },
-    editProduct(){
-      this.showDialogProduct = true
+
+    deleteProduct() {
+      const id = this.product.id
+      return api.put("https://back-coin.herokuapp.com/delete/product", {id})
+        .then((res) => {
+          if (res.data.success) {
+            console.log(res.data.message)
+            this.$store.dispatch('toast/changeVisible', true)
+            this.$store.dispatch('toast/changeMessage', res.data.message)
+            this.$store.dispatch('toast/changeType', 'success')
+            this.$emit('getProducts');
+          } else {
+            this.$store.dispatch('toast/changeVisible', true)
+            this.$store.dispatch('toast/changeMessage', res.data.message)
+            this.$store.dispatch('toast/changeType', 'warning')
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$store.dispatch('toast/changeVisible', true)
+          this.$store.dispatch('toast/changeMessage', err.data.message)
+          this.$store.dispatch('toast/changeType', 'danger')
+          if(err.message.includes('401')) {
+            this.$router.push('/')
+          }
+        });
     },
-    confirmEdit() {
-      this.$emit('getProducts');
-    }
   }
 }
 </script>
@@ -152,6 +220,7 @@ export default {
     border: 1px solid #06bf06;
     border-radius: 5px;
     margin-right: 10px;
+    padding: 5px;
     cursor: pointer;
   }
 

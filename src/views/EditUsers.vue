@@ -22,6 +22,7 @@
           :edit="true"
           @getUsers="getListUsers()"
         />
+        <Toast :duration="3500" @close="false"></Toast>
       </div>
     </div>
     <Footer/>
@@ -31,12 +32,14 @@
 import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
 import ListPersons from '../components/ListPersons.vue'
+import Toast from '../components/Toast.vue';
 import api from '../api'
 export default {
   components: {
     Header,
     Footer,
-    ListPersons
+    ListPersons,
+    Toast
   },
   data() {
     return {
@@ -65,18 +68,28 @@ export default {
         });
     },
 
+    toast(message, type) {
+      this.$store.dispatch('toast/changeVisible', true)
+      this.$store.dispatch('toast/changeMessage', message)
+      this.$store.dispatch('toast/changeType', type)
+    },
+
     registerNewUser() {
       return api.post("https://back-coin.herokuapp.com/users", {nome: this.name, email: this.email, senha: this.password})
         .then((res) => {
           if (res.data.success) {
             this.getListUsers()
+            this.toast(res.data.message, 'success');
             console.log(res.data.message);
             this.password = '';
             this.email = '';
             this.name = '';
+          } else {
+            this.toast(res.data.message, 'warning');
           }
         })
         .catch((err) => {
+          this.toast(err.data.message, 'danger');
           console.log(err);
           if(err.message.includes('401')) {
             this.$router.push('/')

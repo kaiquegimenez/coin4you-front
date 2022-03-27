@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import api from '../api'
 export default {
   name:'Dialog',
   props: {
@@ -81,37 +80,34 @@ export default {
   },
   methods: {
     editProduct(){
-      return api.put("https://back-coin.herokuapp.com/adm/product", {id: this.$props.data.id, nome: this.nameProduct, valor: this.value, descricao: this.description})
-        .then((res) => {
-          if (res.data.success) {
-            console.log(res.data.message)
-            this.$emit('close')
-            this.$emit('confirmEdit')
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          if(err.message.includes('401')) {
-            this.$router.push('/')
-          }
-        });
+      this.$emit('close');
+      const product = {
+        nome: this.nameProduct,
+        valor: this.value,
+        descricao: this.description
+      }
+      this.$emit('confirmEditProduct', product)
+      // return api.put("https://back-coin.herokuapp.com/adm/product", {id: this.$props.data.id, nome: this.nameProduct, valor: this.value, descricao: this.description})
+      //   .then((res) => {
+      //     if (res.data.success) {
+      //       console.log(res.data.message)
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     if(err.message.includes('401')) {
+      //       this.$router.push('/')
+      //     }
+      //   });
     },
     editPerson(){
-      const id = this.$props.data.id
-      return api.put("https://back-coin.herokuapp.com/users", {id, nome: this.nameUser, senha: this.password, email: this.email})
-        .then((res) => {
-          if (res.data.success) {
-            console.log(res.data.message)
-            this.$emit('close')
-            this.$emit('confirmEdit')
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          if(err.message.includes('401')) {
-            this.$router.push('/')
-          }
-        });
+      const person = {
+        nome: this.nameUser,
+        senha: this.password,
+        email: this.email
+      }
+      this.$emit('confirmEditUser', person);
+      this.$emit('close');
     }
   }
 }

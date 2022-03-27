@@ -24,14 +24,19 @@
           </div>
         </div>
       </div>
+      <Toast :duration="3500" @close="false"></Toast>
     </div>
   </transition>
 </template>
 
 <script>
 import api from '../api'
+import Toast from '../components/Toast.vue'
 export default {
   name:'Dialog',
+  components: {
+    Toast
+  },
   props: {
     data: {},
   },
@@ -45,17 +50,26 @@ export default {
     this.balance = this.$props.data.saldo;
   },
   methods: {
+    toast(message, type) {
+      this.$store.dispatch('toast/changeVisible', true)
+      this.$store.dispatch('toast/changeMessage', message)
+      this.$store.dispatch('toast/changeType', type)
+    },
     editBalance(){
       return api.put("https://back-coin.herokuapp.com/adm/users/coins", {id: this.$props.data.id, saldo: this.balance})
         .then((res) => {
           if (res.data.success) {
-            console.log(res.data.message)
+            this.toast(res.data.message, 'success');
             this.$emit('close')
             this.$emit('confirmEdit')
+          } else {
+            this.toast(res.data.message, 'warning');
+            console.log('Não foi possível deletar');
           }
         })
         .catch((err) => {
           console.log(err);
+           this.toast(err.data.message, 'danger');
           if(err.message.includes('401')) {
             this.$router.push('/')
           }
