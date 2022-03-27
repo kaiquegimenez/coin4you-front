@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import api from '../api'
 export default {
   name:'ConfirmDialog',
   props: {
@@ -41,27 +40,10 @@ export default {
       idUser: ''
     }
   },
-  mounted() {
-    this.idUser = JSON.parse(localStorage.getItem('user')).id
-  },
   methods: {
     confirm(){
-      return api.post("https://back-coin.herokuapp.com/coins/changes", {idProduto: this.product.id, idUsuario: this.idUser })
-        .then((res) => {
-          if (res.success) {
-            console.log(res.data.message);
-            this.$emit('close');
-          } else {
-            console.log(res.data.message);
-            this.$emit('close');
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          if(err.message.includes('401')) {
-            this.$router.push('/')
-          }
-        });
+      this.$emit('close');
+      this.$emit('confirmBuy');
     }
   }
 }

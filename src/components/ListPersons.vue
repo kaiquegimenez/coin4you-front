@@ -18,6 +18,7 @@
         </button>
       </div>
     </div>
+    <Toast :duration="3500" @close="false"></Toast>
     <DialogEditBalance @confirmEdit="confirmEdit" @close="showDialog = false" v-if="showDialog" :data="person"/>
   </div>
 </template>
@@ -25,10 +26,13 @@
 <script>
 import api from '../api'
 import DialogEditBalance from '../components/DialogEditBalance.vue'
+import Toast from '../components/Toast.vue';
+
 export default {
   name: 'ListPersons',
   components: {
-    DialogEditBalance
+    DialogEditBalance,
+    Toast
   },
   data() {
     return {
@@ -47,19 +51,26 @@ export default {
     }
   },
   methods: {
+    toast(message, type) {
+      this.$store.dispatch('toast/changeVisible', true)
+      this.$store.dispatch('toast/changeMessage', message)
+      this.$store.dispatch('toast/changeType', type)
+    },
     deleteUser(){
       const id = this.person.id
       return api.put("https://back-coin.herokuapp.com/users/delete", {id})
         .then((res) => {
           if (res.data.success) {
-            console.log(res.data.message);
+            this.toast(res.data.message, 'success');
             this.$emit('getUsers');
           } else {
+            this.toast(res.data.message, 'warning');
             console.log('Não foi possível deletar');
           }
         })
         .catch((err) => {
           console.log(err);
+          this.toast(err.data.message, 'danger');
           if(err.message.includes('401')) {
             this.$router.push('/')
           }
@@ -69,6 +80,7 @@ export default {
       this.showDialog = true
     },
     confirmEdit() {
+      
       this.$emit('getUsers');
     }
   },

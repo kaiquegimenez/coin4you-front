@@ -90,8 +90,8 @@
       @close="false"
     ></Toast>
     <Footer />
-    <Dialog :userId="user.id" :person="person" @confirmEdit="confirmEdit" @close="showModal = false" v-if="showModal" />
-    <DialogEdit @confirmEdit="confirmEdit" @close="showDialogEditUser= false" v-if="showDialogEditUser" type="user" :data="user" title="Editar Usuário"/>
+    <Dialog :person="person" @confirmTransfer="confirmTransfer" @close="showModal = false" v-if="showModal" />
+    <DialogEdit @confirmEditUser="confirmEditUser" @close="showDialogEditUser= false" v-if="showDialogEditUser" type="user" :data="user" title="Editar Usuário"/>
   </div>
 </template>
 
@@ -133,6 +133,7 @@ export default {
   },
   methods: {
     getUser() {
+      /* eslint-disable no-debugger */
       return api.get("https://back-coin.herokuapp.com/users")
         .then((res) => {
           if (res.status === 200) {
@@ -180,14 +181,51 @@ export default {
     openEditUser() {
       this.showDialogEditUser = true;
     },
-    confirmEdit() {
-      this.getUser()
+    confirmEditUser(person){
+      return api.put("https://back-coin.herokuapp.com/users", {id: this.user.id, nome: person.nome, senha: person.senha, email: person.email})
+        .then((res) => {
+          if (res.data.success) {
+            console.log(res.data.message)
+            this.toast(res.data.message, 'success')
+            this.getUser()
+          } else {
+            this.toast(res.data.message, 'warning')
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          this.toast(err.data.message, 'danger')
+          if(err.message.includes('401')) {
+            this.$router.push('/')
+          }
+        });
+    },
+    toast(message, type) {
+      this.$store.dispatch('toast/changeVisible', true)
+      this.$store.dispatch('toast/changeMessage', message)
+      this.$store.dispatch('toast/changeType', type)
+    },
+    confirmTransfer(value, description) {
+      return api.post("https://back-coin.herokuapp.com/coins/transfer", {idDestino: this.person.id, valor: parseInt(value), idUser: this.user.id})
+        .then((res) => {
+          if (res.data.success) {
+            this.toast('Transferencia realizada com sucesso!', 'success')
+            this.getUser()
+          } else {
+            this.toast('Não foi possível fazer a transferencia!', 'warning')
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          this.toast('Não foi possível fazer a transferencia!', 'danger')
+          if(err.message.includes('401')) {
+            this.$router.push('/')
+          }
+        });
     },
     logout() {
       /* eslint-disable */
-      this.typeToast = 'success';
-      this.showToast = true;
-      this.message = 'Logout realizado com sucesso!';
+      this.toast('Logout realizado com sucesso!', 'success')
       localStorage.clear('token');
       this.$router.push('/');
     },

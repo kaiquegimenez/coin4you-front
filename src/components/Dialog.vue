@@ -1,4 +1,5 @@
 <template>
+<div>
   <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
@@ -29,40 +30,29 @@
       </div>
     </div>
   </transition>
+</div>
 </template>
 
 <script>
-import api from '../api'
 export default {
   name:'Dialog',
   data() {
     return {
       description: '',
-      value: 0
+      value: 0,
+      showToast: false,
+      message: '',
+      typeToast: ''
     }
   },
   props: {
     person: {},
-    userId: {
-      default: 0,
-      type: Number
-    }
   },
   methods: {
     confirm(){
-      return api.post("https://back-coin.herokuapp.com/coins/transfer", {idDestino: this.$props.person.id, valor: this.value, idUser: this.$props.userId})
-        .then((res) => {
-          if (res.data.success) {
-            this.$emit('close')
-            this.$emit('confirmEdit')
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          if(err.message.includes('401')) {
-            this.$router.push('/')
-          }
-        });
+      /* eslint-disable no-debugger */
+      this.$emit('close');
+      this.$emit('confirmTransfer', this.value, this.description)
     }
   }
 }
