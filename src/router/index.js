@@ -11,12 +11,12 @@ const routes = [
     component: Home,
     beforeEnter: checkAuth,
   },
-  // {
-  //   path: '/notifications',
-  //   name: 'Notifications',
-  //   component: () => import('../views/Notifications.vue'),
-  //   beforeEnter: checkAuth,
-  // },
+  {
+    path: '/notifications',
+    name: 'Notifications',
+    component: () => import('../views/Notifications.vue'),
+    beforeEnter: checkAuth,
+  },
   {
     path: '/store',
     name: 'Store',

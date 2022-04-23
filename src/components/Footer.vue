@@ -12,10 +12,10 @@
         <img src="../assets/icons/kriptocoin.svg" alt="">
         Pagar
       </div>
-      <!-- <div @click="goTo('Notifications')" class="footer__icon">
+      <div @click="goTo('Notifications')" class="footer__icon">
         <img src="../assets/icons/notifications.svg" width="30px" height="30px" alt="">
         Notificações
-      </div> -->
+      </div>
       <div @click="goTo('Store')" class="footer__icon">
         <img src="../assets/icons/store.svg" width="30px" height="30px" alt="">
         Loja
