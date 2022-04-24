@@ -78,7 +78,6 @@ export default {
     },
 
     confirmEditProduct(product) {
-      /* eslint-disable no-debugger */
       return api.put("https://back-coin.herokuapp.com/adm/product", {id: this.product.id, nome: product.nameProduct, valor: product.value, descricao: product.description})
         .then((res) => {
           if (res.data.success) {

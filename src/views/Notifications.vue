@@ -31,10 +31,8 @@ export default {
     this.getNotifications()
   },
   mounted() {
-    /* eslint-disable no-debugger */
     const listElm = document.querySelector('#infinite-list')
     listElm.addEventListener('scroll', () => {
-      debugger
       console.log('teste')
         if(listElm.scrollTop + listElm.clientHeight >= listElm.scrollHeight){
           this.getNotifications()

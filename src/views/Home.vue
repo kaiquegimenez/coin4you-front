@@ -134,7 +134,6 @@ export default {
   },
   methods: {
     getUser() {
-      /* eslint-disable no-debugger */
       return api.get("https://back-coin.herokuapp.com/users")
         .then((res) => {
           if (res.status === 200) {
