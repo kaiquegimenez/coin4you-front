@@ -1,23 +1,17 @@
 <template>
   <div>
-    <Header/>
     <div id="infinite-list" class="body-container">
       <ListNotifications v-for="(notification, index) in notifications" :key="index" :notification="notification"/>
     </div>
-    <Footer/>
   </div>
 </template>
 
 <script>
-import Footer from '../components/Footer.vue'
 import ListNotifications from '../components/ListNotifications.vue'
-import Header from '../components/Header.vue'
 import api from '../api';
 export default {
   components: {
-    Footer,
     ListNotifications,
-    Header
   },
   data() {
     return {
@@ -64,10 +58,9 @@ export default {
 
 <style lang="scss" scoped>
   .body-container {
-    height: 700px;
+    height: calc(100vh - 90px);
     overflow-x: hidden;
     overflow-y: scroll;
-    padding-bottom: 50px;
   }
   ::-webkit-scrollbar {
     width: 5px;

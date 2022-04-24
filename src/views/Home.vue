@@ -89,7 +89,6 @@
       :duration="3500"
       @close="false"
     ></Toast>
-    <Footer />
     <Dialog :person="person" @confirmTransfer="confirmTransfer" @close="showModal = false" v-if="showModal" />
     <DialogEdit @confirmEditUser="confirmEditUser" @close="showDialogEditUser= false" v-if="showDialogEditUser" type="user" :data="user" title="Editar Usuário"/>
   </div>
@@ -98,7 +97,6 @@
 <script>
 import Dialog from "../components/Dialog.vue";
 import ListPersons from "../components/ListPersons.vue";
-import Footer from "../components/Footer.vue";
 import Header from "../components/Header.vue";
 import DialogEdit from '../components/DialogEdit.vue';
 import Toast from '../components/Toast.vue'
@@ -107,7 +105,6 @@ import moment from 'moment'
 export default {
   components: {
     ListPersons,
-    Footer,
     Header,
     Dialog,
     DialogEdit,

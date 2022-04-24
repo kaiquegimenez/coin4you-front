@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Header/>
     <div class="body-container">
       <div class="input-container">
         <div>
@@ -24,19 +23,14 @@
         />
       </div>
     </div>
-    <Footer/>
   </div>
 </template>
 
 <script>
 import api from '../api';
-import Header from '../components/Header.vue'
-import Footer from '../components/Footer.vue'
 import ListStore from '../components/ListStrore.vue'
 export default {
   components: {
-    Header,
-    Footer,
     ListStore
   },
   data() {
