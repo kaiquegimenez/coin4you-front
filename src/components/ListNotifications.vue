@@ -3,18 +3,19 @@
     <div class="list__container">
       <div class="list__notification">
         <div class="list__text">
-          <span> <b>{{notification.person}}</b> te mandou {{notification.valor}}KC </span>
-          <span class="list__message">{{notification.description}}</span>
+          <span> <b>{{notification.nome}}</b> te mandou {{notification.valor}}KC </span>
+          <span class="list__message">{{notification.notificacao}}</span>
         </div>
       </div>
     </div>
     <div class="list__date">
-      10 de nov às 16:58
+      {{convertData()}}
     </div>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: 'ListNotifications',
   data() {
@@ -23,13 +24,22 @@ export default {
   props: {
     notification: {
       default: {
-        description: '',
+        notificacao: '',
         valor: 0,
-        type: '',
-        person: ''
+        enviado_em: '',
+        nome: ''
       },
     },
   },
+  mounted() {
+    this.convertData()
+  },
+  methods: {
+    convertData() {
+      const day = this.$props.notification.enviado_em
+      return `${moment(day).locale('pt-br').format('DD')} de ${moment(day).locale('pt-br').format('MMM')} de ${moment(day).locale('pt-br').format('YYYY')} às ${moment(day).format('HH:mm')}`
+    }
+  }
 }
 </script>
 
