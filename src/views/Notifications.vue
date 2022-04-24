@@ -84,7 +84,8 @@ export default {
 <style lang="scss" scoped>
   .body-container {
     height: calc(100vh - 90px);
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
   ::-webkit-scrollbar {
     width: 5px;

@@ -4,10 +4,10 @@
         <img src="../assets/icons/home.svg" width="30px" height="30px" alt="">
         Início
       </div>
-      <!-- <div class="footer__icon">
+      <div class="footer__icon">
         <img src="../assets/icons/wallet.svg" width="30px" height="30px" alt="">
         Carteira
-      </div> -->
+      </div>
       <div class="footer__pay">
         <img src="../assets/icons/kriptocoin.svg" alt="">
         Pagar

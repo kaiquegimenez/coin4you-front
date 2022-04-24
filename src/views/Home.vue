@@ -103,6 +103,7 @@ import Header from "../components/Header.vue";
 import DialogEdit from '../components/DialogEdit.vue';
 import Toast from '../components/Toast.vue'
 import api from "../api";
+import moment from 'moment'
 export default {
   components: {
     ListPersons,
@@ -206,7 +207,7 @@ export default {
       this.$store.dispatch('toast/changeType', type)
     },
     confirmTransfer(value, description) {
-      return api.post("https://back-coin.herokuapp.com/coins/transfer", {idDestino: this.person.id, valor: parseInt(value), idUser: this.user.id})
+      return api.post("http://localhost:3000/coins/transfer", {idDestino: this.person.id, valor: parseInt(value), idUser: this.user.id, notificacao: description, enviadoEm: moment()})
         .then((res) => {
           if (res.data.success) {
             this.toast('Transferencia realizada com sucesso!', 'success')
