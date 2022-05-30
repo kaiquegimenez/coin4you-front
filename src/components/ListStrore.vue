@@ -8,7 +8,7 @@
         <div class="items">
           <div>
             {{product.nome}}
-            <span class="items__price">{{product.valor}} KC</span>
+            <span class="items__price">{{product.valor}}KC</span>
           </div>
           <div class="items__decription">
             {{product.descricao}}
@@ -206,6 +206,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    max-width: 170px;
     &__price {
       color: #f3c011;
     }

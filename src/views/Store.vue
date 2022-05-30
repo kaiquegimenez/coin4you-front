@@ -2,9 +2,7 @@
   <div class="container">
     <Header/>
     <div class="body-container">
-      <div>
-        <ListStore v-for="(product, index) in products" :key="index" :product="product" />
-      </div>
+      <ListStore v-for="(product, index) in products" :key="index" :product="product" />
     </div>
     <Footer/>
   </div>
@@ -54,6 +52,7 @@ export default{
   }
   .body-container {
     height: 100%;
+    width: 100%;
     overflow: auto;
     z-index: 0;
   }
