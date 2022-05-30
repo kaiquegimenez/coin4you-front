@@ -6,10 +6,8 @@
           <img src="../assets/icons/shop.svg" alt="">
         </div>
         <div class="items">
-          <div>
-            {{product.nome}}
-            <span class="items__price">{{product.valor}} KC</span>
-          </div>
+          {{product.nome}}
+          <span class="items__price">{{product.valor}} KC</span>
           <div class="items__decription">
             {{product.descricao}}
           </div>
@@ -165,32 +163,32 @@ export default {
 <style lang="scss" scoped>
   .list {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    width: 100vw;
-    height: 80px;
-    border-top: solid 10px #f5f5f5;
-    cursor: pointer;
+    width: 49.8vw;
+    padding: 5px 0 0.5px;
+    margin-bottom: 0.5px;
 
     &__container {
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      width: calc(100% - 110px);
+      width: 100%;
+      height: 100%;
     }
 
     &__user-data {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      height: 100%;
     }
 
     &__image {
       background-color: #aaa;
-      border-radius: 50%;
-      height: 50px;
-      margin-bottom: 0.5vh;
-      width: 50px;
-      margin: 0 10px;
+      height: 60%;
+      width: 45vw;
       overflow: hidden;
       position: relative;
       display: flex;
@@ -206,6 +204,9 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 5px;
     &__price {
       color: #f3c011;
     }
@@ -218,9 +219,10 @@ export default {
     background-color: #06bf06;
     color: white;
     border: 1px solid #06bf06;
-    border-radius: 5px;
+    border-radius: 2px;
     margin-right: 10px;
     padding: 5px;
+    margin: 5px;
     cursor: pointer;
   }
 
