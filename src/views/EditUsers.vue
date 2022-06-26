@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Header/>
     <div class="body-container">
       <div class="input-container">
         <div class="input-email">
@@ -25,19 +24,14 @@
         <Toast :duration="3500" @close="false"></Toast>
       </div>
     </div>
-    <Footer/>
   </div>
 </template>
 <script>
-import Header from '../components/Header.vue'
-import Footer from '../components/Footer.vue'
 import ListPersons from '../components/ListPersons.vue'
 import Toast from '../components/Toast.vue';
 import api from '../api'
 export default {
   components: {
-    Header,
-    Footer,
     ListPersons,
     Toast
   },
