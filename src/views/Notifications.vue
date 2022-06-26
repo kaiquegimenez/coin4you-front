@@ -36,7 +36,7 @@ export default {
   methods: {
     getNotifications() {
       this.page++
-      return api.get("http://localhost:3000/transferencias", { params: { id:this.idUser, page: this.page } })
+      return api.get("https://back-coin.herokuapp.com/transferencias", { params: { id:this.idUser, page: this.page } })
         .then((res) => {
           if (res.data.success) {
             this.notifications = this.notifications.concat(res.data.notifications)
