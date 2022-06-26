@@ -89,7 +89,6 @@
       :duration="3500"
       @close="false"
     ></Toast>
-    <Footer />
     <Dialog :person="person" @confirmTransfer="confirmTransfer" @close="showModal = false" v-if="showModal" />
     <DialogEdit @confirmEditUser="confirmEditUser" @close="showDialogEditUser= false" v-if="showDialogEditUser" type="user" :data="user" title="Editar Usuário"/>
   </div>
@@ -98,15 +97,14 @@
 <script>
 import Dialog from "../components/Dialog.vue";
 import ListPersons from "../components/ListPersons.vue";
-import Footer from "../components/Footer.vue";
 import Header from "../components/Header.vue";
 import DialogEdit from '../components/DialogEdit.vue';
 import Toast from '../components/Toast.vue'
 import api from "../api";
+import moment from 'moment'
 export default {
   components: {
     ListPersons,
-    Footer,
     Header,
     Dialog,
     DialogEdit,
@@ -133,7 +131,6 @@ export default {
   },
   methods: {
     getUser() {
-      /* eslint-disable no-debugger */
       return api.get("https://back-coin.herokuapp.com/users")
         .then((res) => {
           if (res.status === 200) {
@@ -206,7 +203,7 @@ export default {
       this.$store.dispatch('toast/changeType', type)
     },
     confirmTransfer(value, description) {
-      return api.post("https://back-coin.herokuapp.com/coins/transfer", {idDestino: this.person.id, valor: parseInt(value), idUser: this.user.id})
+      return api.post("http://localhost:3000/coins/transfer", {idDestino: this.person.id, valor: parseInt(value), idUser: this.user.id, notificacao: description, enviadoEm: moment()})
         .then((res) => {
           if (res.data.success) {
             this.toast('Transferencia realizada com sucesso!', 'success')

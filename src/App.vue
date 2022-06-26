@@ -1,22 +1,31 @@
 <template>
   <div id="app">
+    <Header v-if="$route.name !== 'Home'"/>
     <router-view/>
     <Footer v-if="$route.path !== '/'"/>
   </div>
 </template>
 
 <script>
+import Footer from './components/Footer.vue'
+import Header from './components/Header.vue'
 
 export default {
   name: 'App',
   components: {
+    Header,
+    Footer
   }
 }
 </script>
 
 <style>
-body {
-  font-family: 'Roboto', sans-serif;
+#app {
+  height: 100%;
+}
+body, html {
   margin: 0;
+  height: 100%;
+  overflow: hidden;
 }
 </style>

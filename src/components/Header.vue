@@ -23,6 +23,9 @@ export default {
     height: 5vh;
     background-color: #f3c011;
     justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 2;
   }
   .logo {
     display: flex;
