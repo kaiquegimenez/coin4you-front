@@ -101,7 +101,7 @@ export default {
   margin: 10px;
   .input {
     border: 1px solid rgba(0, 0, 0, 0.425);
-    height: 20px;
+    height: 40px;
     padding: 5px;
     border-radius: 5px;
     margin: 5px;
@@ -127,6 +127,7 @@ export default {
     height: 30px;
     width: 100px;
     margin: 5px;
+    cursor: pointer;
   }
 }
 
