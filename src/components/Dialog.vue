@@ -137,6 +137,7 @@ export default {
     height: 30px;
     width: 100px;
     margin: 5px;
+    cursor: pointer;
   }
 }
 

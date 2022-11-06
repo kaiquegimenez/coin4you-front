@@ -18,41 +18,41 @@
               <input class="input" type="text" placeholder="E-mail" v-model="email">
             </div>
             <div class="input-container" >
-              <div class="space">
+              <div style="width: 100%" class="space">
                 Cidade:
                 <input class="input" type="text" placeholder="Cidade" v-model="city">
               </div>
-              <div>
+              <div style="width: 100%">
                 Rua:
                 <input class="input" type="text" placeholder="Rua" v-model="street">
               </div>
             </div>
             <div class="input-container">
-              <div class="space">
+              <div style="width: 100%" class="space">
                 Bairro:
                 <input class="input" type="text" placeholder="Bairro" v-model="neighborhood">
               </div>
-              <div>
+              <div style="width: 100%">
                 Número:
                 <input class="input" type="text" placeholder="Número" v-model="number">
               </div>
             </div>
             <div class="input-container">
-              <div class="space">
+              <div style="width: 100%" class="space">
                 Estado:
                 <input class="input" type="text" placeholder="Estado" v-model="state">
               </div>
-              <div>
+              <div style="width: 100%">
                 CEP:
                 <input class="input" type="text" placeholder="Cep" v-model="cep">
               </div>
             </div>
             <div class="input-container">
-              <div class="space">
+              <div style="width: 100%" class="space">
                 Telefone:
                 <input class="input" type="text" placeholder="Telefone" v-model="phone">
               </div>
-              <div>
+              <div style="width: 100%">
                 Senha:
                 <input class="input" type="password" placeholder="Senha" v-model="password">
               </div>
@@ -277,6 +277,7 @@ export default {
     height: 30px;
     width: 100px;
     margin: 5px;
+    cursor: pointer;
   }
 }
 

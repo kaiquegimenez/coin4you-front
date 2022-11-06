@@ -130,5 +130,6 @@ export default {
     width: 100%;
     font-size: 18px;
     margin: 5px;
+    cursor: pointer;
   }
 </style>

@@ -128,6 +128,7 @@ export default {
   .button {
     margin: 5px;
     border-radius: 50%;
+    cursor: pointer;
     &__money {
       border: 1px solid #f3c011;
       background-color: #f3c011;

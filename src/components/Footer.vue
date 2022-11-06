@@ -59,6 +59,7 @@ export default {
     font-size: 0.8em;
     color: #f3c011;
     z-index: 0;
+    cursor: pointer;
   }
   .footer__icon {
     display: flex;
@@ -68,5 +69,6 @@ export default {
     font-size: 0.8em;
     color: #f3c011;
     width: 20%;
+    cursor: pointer;
   }
 </style>
