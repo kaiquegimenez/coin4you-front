@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  name:'Dialog',
+  name:'DialogTransfer',
   data() {
     return {
       description: '',
@@ -111,7 +111,7 @@ export default {
   margin: 10px;
   .input {
     border: 1px solid rgba(0, 0, 0, 0.425);
-    height: 20px;
+    height: 40px;
     padding: 5px;
     border-radius: 5px;
     margin: 5px;

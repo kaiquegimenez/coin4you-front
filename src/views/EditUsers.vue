@@ -1,17 +1,8 @@
 <template>
   <div>
     <div class="body-container">
-      <div class="input-container">
-        <div class="input-email">
-          <input class="input input__email" type="text" placeholder="E-mail" v-model="email">
-        </div>
-        <div>
-          <input class="input" type="text" placeholder="Nome" v-model="name">
-          <input class="input" type="password" placeholder="Senha" v-model="password">
-        </div>
-      </div>
       <div class="button-container">
-        <button @click="registerNewUser()" class="button">Cadastrar</button>
+        <button @click="showModal = true" class="button">+ Cadastrar Novo Usuário</button>
       </div>
       <div class="list-persons">
         <ListPersons
@@ -22,6 +13,7 @@
           @getUsers="getListUsers()"
         />
         <Toast :duration="3500" @close="false"></Toast>
+        <DialogAddNewUser @addUser="registerNewUser($event)"  @close="showModal = false" v-if="showModal" />
       </div>
     </div>
   </div>
@@ -30,17 +22,17 @@
 import ListPersons from '../components/ListPersons.vue'
 import Toast from '../components/Toast.vue';
 import api from '../api'
+import DialogAddNewUser from '../components/DialogAddNewUser.vue';
 export default {
   components: {
     ListPersons,
-    Toast
-  },
+    Toast,
+    DialogAddNewUser
+},
   data() {
     return {
       persons: [],
-      name: '',
-      password: '',
-      email: '',
+      showModal: false
     }
   },
   mounted(){
@@ -68,8 +60,8 @@ export default {
       this.$store.dispatch('toast/changeType', type)
     },
 
-    registerNewUser() {
-      return api.post("https://back-coin.herokuapp.com/users", {nome: this.name, email: this.email, senha: this.password})
+    registerNewUser(user) {
+      return api.post("https://back-coin.herokuapp.com/users", {nome: user.nome, email: user.email, senha: user.senha, bairro: user.bairro, cep: user.cep, cidade: user.cidade, estado: user.estado, numero: user.numero, rua: user.rua, telefone: user.telefone})
         .then((res) => {
           if (res.data.success) {
             this.getListUsers()
@@ -106,12 +98,12 @@ export default {
     height: 15%;
   }
   .list-persons {
-    height: 80%;
+    height: calc(100% - 50px);;
     overflow: auto;
   }
   .input {
     border: 1px solid rgba(0, 0, 0, 0.425);
-    height: 20px;
+    height: 40px;
     padding: 5px;
     border-radius: 5px;
     margin: 5px;
@@ -134,8 +126,9 @@ export default {
     color: white;
     border: 1px solid #f3c011;
     border-radius: 10px;
-    height: 30px;
-    width: 100px;
+    height: 40px;
+    width: 100%;
+    font-size: 18px;
     margin: 5px;
   }
 </style>

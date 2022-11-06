@@ -89,13 +89,13 @@
       :duration="3500"
       @close="false"
     ></Toast>
-    <Dialog :person="person" @confirmTransfer="confirmTransfer" @close="showModal = false" v-if="showModal" />
+    <DialogTransfer :person="person" @confirmTransfer="confirmTransfer" @close="showModal = false" v-if="showModal" />
     <DialogEdit @confirmEditUser="confirmEditUser" @close="showDialogEditUser= false" v-if="showDialogEditUser" type="user" :data="user" title="Editar Usuário"/>
   </div>
 </template>
 
 <script>
-import Dialog from "../components/Dialog.vue";
+import DialogTransfer from "../components/Dialog.vue";
 import ListPersons from "../components/ListPersons.vue";
 import Header from "../components/Header.vue";
 import DialogEdit from '../components/DialogEdit.vue';
@@ -106,7 +106,7 @@ export default {
   components: {
     ListPersons,
     Header,
-    Dialog,
+    DialogTransfer,
     DialogEdit,
     Toast
   },
@@ -179,7 +179,7 @@ export default {
       this.showDialogEditUser = true;
     },
     confirmEditUser(person){
-      return api.put("https://back-coin.herokuapp.com/users", {id: this.user.id, nome: person.nome, senha: person.senha, email: person.email})
+      return api.put("https://back-coin.herokuapp.com/users", {id: this.user.id, ...person})
         .then((res) => {
           if (res.data.success) {
             console.log(res.data.message)
