@@ -1,71 +1,64 @@
 <template>
+<div>
   <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
-        <div class="modal-container modal-container--user">
+        <div class="modal-container">
           <div class="modal-header">
             <slot name="header">
-              <h3>{{title}}</h3>
+              <h3>Adicionar Novo Usuário</h3>
             </slot>
           </div>
-          <div v-if="type === 'user'" class="modal-body">
+
+          <div class="modal-body">
             <div class="input2">
               Nome:
-              <input class="input" type="text" placeholder="Nome" v-model="nameUser">
+              <input class="input" type="text" placeholder="Nome" v-model="name">
             </div>
             <div class="input2">
               Email:
               <input class="input" type="text" placeholder="E-mail" v-model="email">
             </div>
             <div class="input-container" >
-              <div style="width: 100%" class="space">
+              <div class="space">
                 Cidade:
                 <input class="input" type="text" placeholder="Cidade" v-model="city">
               </div>
-              <div style="width: 100%">
+              <div>
                 Rua:
                 <input class="input" type="text" placeholder="Rua" v-model="street">
               </div>
             </div>
             <div class="input-container">
-              <div style="width: 100%" class="space">
+              <div class="space">
                 Bairro:
                 <input class="input" type="text" placeholder="Bairro" v-model="neighborhood">
               </div>
-              <div style="width: 100%">
+              <div>
                 Número:
                 <input class="input" type="text" placeholder="Número" v-model="number">
               </div>
             </div>
             <div class="input-container">
-              <div style="width: 100%" class="space">
+              <div class="space">
                 Estado:
                 <input class="input" type="text" placeholder="Estado" v-model="state">
               </div>
-              <div style="width: 100%">
+              <div>
                 CEP:
                 <input class="input" type="text" placeholder="Cep" v-model="cep">
               </div>
             </div>
             <div class="input-container">
-              <div style="width: 100%" class="space">
+              <div class="space">
                 Telefone:
                 <input class="input" type="text" placeholder="Telefone" v-model="phone">
               </div>
-              <div style="width: 100%">
+              <div>
                 Senha:
                 <input class="input" type="password" placeholder="Senha" v-model="password">
               </div>
             </div>
-          </div>
-
-          <div v-else class="modal-body">
-            Nome:
-            <input class="input" type="text" placeholder="Nome do Produto" v-model="nameProduct">
-            Valor:
-            <input class="input" type="number" placeholder="Valor do Produto" v-model="value">
-            Descrição:
-            <input class="input" type="text" placeholder="Descrição do Produto" v-model="description">
           </div>
 
           <div class="modal-footer">
@@ -73,7 +66,7 @@
               <button class="button button__cancel" @click="$emit('close')">
                 Cancelar
               </button>
-              <button class="button button__confirm" @click="type === 'user' ? editPerson() : editProduct()">
+              <button class="button button__confirm" @click="confirm()">
                 Confirmar
               </button>
             </slot>
@@ -82,27 +75,17 @@
       </div>
     </div>
   </transition>
+</div>
 </template>
 
 <script>
 export default {
-  name:'DialogEditUser',
-  props: {
-    data: {},
-    title: {
-      type: String,
-      default: ''
-    },
-    type: {
-      type: String,
-      default: ''
-    }
-
-  },
+  name:'DialogAddNewUser',
   data() {
     return {
+      name: '',
+      password: '',
       email: '',
-      nameUser:'',
       city: '',
       phone: '',
       number: '',
@@ -110,56 +93,19 @@ export default {
       state: '',
       cep: '',
       neighborhood: '',
-      password: '',
-      nameProduct: '',
-      value: 0,
-      description: '',
+      showToast: false,
+      message: '',
+      typeToast: ''
     }
   },
-  mounted() {
-    if(this.$props.type === 'user'){
-      this.email = this.$props.data.email;
-      this.nameUser = this.$props.data.nome;
-      this.city = this.$props.data.cidade;
-      this.phone = this.$props.data.telefone;
-      this.number = this.$props.data.numero;
-      this.street = this.$props.data.rua;
-      this.state = this.$props.data.estado;
-      this.cep = this.$props.data.cep;
-      this.neighborhood = this.$props.data.bairro;
-    } else {
-      this.nameProduct = this.$props.data.nome;
-      this.value = this.$props.data.valor;
-      this.description = this.$props.data.descricao;
-    }
-    console.log(this.$props.data)
+  props: {
+    person: {},
   },
   methods: {
-    editProduct(){
-      this.$emit('close');
-      const product = {
-        nome: this.nameProduct,
-        valor: this.value,
-        descricao: this.description
-      }
-      this.$emit('confirmEditProduct', product)
-      // return api.put("https://back-coin.herokuapp.com/adm/product", {id: this.$props.data.id, nome: this.nameProduct, valor: this.value, descricao: this.description})
-      //   .then((res) => {
-      //     if (res.data.success) {
-      //       console.log(res.data.message)
-      //     }
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //     if(err.message.includes('401')) {
-      //       this.$router.push('/')
-      //     }
-      //   });
-    },
-    editPerson(){
-      const person = {
-        nome: this.nameUser,
-        senha: this.password,
+    confirm(){
+      /* eslint-disable no-debugger */
+      const dataUser = {
+        nome: this.name,
         email: this.email,
         cidade: this.city,
         telefone: this.phone,
@@ -167,10 +113,11 @@ export default {
         rua: this.street,
         estado: this.state,
         cep: this.cep,
-        bairro: this.neighborhood
-      }
-      this.$emit('confirmEditUser', person);
+        bairro: this.neighborhood,
+        senha: this.password
+      } 
       this.$emit('close');
+      this.$emit('addUser', dataUser)
     }
   }
 }
@@ -198,17 +145,13 @@ export default {
 .modal-container {
   border-top: 1px solid #f3c011;
   border-bottom: 1px solid white;
-  width: 90%;
-  height: 50%;
+  width: 95%;
+  height: 80%;
   margin: 0px auto;
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
-
-  &--user {
-    height: 80%;
-  }
 }
 
 .modal-header {
@@ -229,23 +172,22 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   margin: 10px;
+
   .input-container {
     display: flex;
     justify-content: center;
     align-items: flex-start;
     width: 100%;
     padding: 5px 0;
-    margin-top: 5px;
   }
   .input {
     border: 1px solid rgba(0, 0, 0, 0.425);
-    height: 35px;
+    height: 40px;
     padding: 5px;
     width: 100%;
     border-radius: 5px;
-    margin-top: 5px;
   }
   .space {
     margin-right: 5px;

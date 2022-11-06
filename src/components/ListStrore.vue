@@ -79,7 +79,6 @@ export default {
       return api.put("https://back-coin.herokuapp.com/adm/product", {id: this.product.id, nome: product.nameProduct, valor: product.value, descricao: product.description})
         .then((res) => {
           if (res.data.success) {
-            console.log(res.data.message)
             this.$store.dispatch('toast/changeVisible', true)
             this.$store.dispatch('toast/changeMessage', res.data.message)
             this.$store.dispatch('toast/changeType', 'success')
@@ -229,6 +228,7 @@ export default {
   .button {
     margin: 5px;
     border-radius: 50%;
+    cursor: pointer;
     &__edit {
       border: 1px solid #f3c011;
       background-color: #f3c011;
