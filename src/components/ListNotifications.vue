@@ -2,24 +2,41 @@
   <div class="list">
     <div class="list__container">
       <div class="list__notification">
-        <div class="list__text">
+        <div v-if="!isAdmin" class="list__text">
           <span> <b>{{notification.nome}}</b> te mandou {{notification.valor}}KC </span>
           <span class="list__message">{{notification.notificacao}}</span>
         </div>
+        <div v-if="isAdmin" @click="showMoreDetails = true" class="list__text">
+          <span> <b>Compra</b> </span>
+          <span class="list__message">{{notification.nome}}{{notification.notificacao}}</span>
+          <div class="list__date">
+            <div>
+              {{convertData()}}
+            </div>
+            <div class="more-infos">
+              mais informações
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="list__date">
-      {{convertData()}}
-    </div>
+    <DialogMoreInfos v-if="showMoreDetails" @close="showMoreDetails = false" :infos="notification"/>
   </div>
 </template>
 
 <script>
-import moment from 'moment'
+import moment from 'moment';
+import DialogMoreInfos from '../components/DialogMoreInfos.vue'
 export default {
   name: 'ListNotifications',
+  components: {
+    DialogMoreInfos
+  },
   data() {
-    return {};
+    return {
+      isAdmin: false,
+      showMoreDetails:  false
+    };
   },
   props: {
     notification: {
@@ -32,13 +49,14 @@ export default {
     },
   },
   mounted() {
+    this.isAdmin = JSON.parse(localStorage.getItem("user")).roles === 'ADM' ? true : false;
     this.convertData()
   },
   methods: {
     convertData() {
       const day = this.$props.notification.enviado_em
       return `${moment(day).locale('pt-br').format('DD')} de ${moment(day).locale('pt-br').format('MMM')} de ${moment(day).locale('pt-br').format('YYYY')} às ${moment(day).format('HH:mm')}`
-    }
+    },
   }
 }
 </script>
@@ -89,11 +107,18 @@ export default {
     }
     
     &__date {
+      display: flex;
+      justify-content: space-between;
+      width: calc(100% - 30px);
       font-size: 12px;
-      position: absolute;
-      bottom: 5px;
       left: 10px;
       color: gray;
+
+      .more-infos {
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+      }
     }
   }
 </style>

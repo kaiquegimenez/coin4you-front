@@ -33,7 +33,7 @@ import ConfirmDialog from '../components/ConfirmDialog.vue'
 import DialogEdit from '../components/DialogEdit.vue'
 import api from '../api';
 import Toast from '../components/Toast.vue';
-
+import moment from 'moment'
 
 export default {
   name: 'ListStore',
@@ -106,7 +106,7 @@ export default {
 
     confirmBuy(){
       /* eslint-disable no-debugger */
-      return api.post("https://back-coin.herokuapp.com/coins/changes", {idProduto: this.product.id, idUsuario: this.idUser })
+      return api.post("https://back-coin.herokuapp.com/coins/changes", {idProduto: this.product.id, idUsuario: this.idUser, enviadoEm: moment() })
         .then((res) => {
           if (res.data.success) {
             this.$store.dispatch('toast/changeVisible', true)
