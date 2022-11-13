@@ -1,17 +1,17 @@
 <template>
   <div>
     <div id="infinite-list" class="body-container">
-      <ListNotifications v-for="(notification, index) in notifications" :key="index" :notification="notification"/>
+      <ListExtract v-for="(notification, index) in notifications" :key="index" :userId="idUser" :dateNotificationOld="notifications[index-1] ? notifications[index-1].enviado_em : ''" :notification="notification"/>
     </div>
   </div>
 </template>
 
 <script>
-import ListNotifications from '../components/ListNotifications.vue'
+import ListExtract from '../components/ListExtract.vue'
 import api from '../api';
 export default {
   components: {
-    ListNotifications,
+    ListExtract,
   },
   data() {
     return {
@@ -22,6 +22,9 @@ export default {
   },
   created() {
     this.idUser = JSON.parse(localStorage.getItem('user')).id
+    if(this.$router.currentRoute.params.id) {
+      this.idUser = this.$router.currentRoute.params.id;
+    }
     this.getNotifications()
   },
   mounted() {
@@ -35,7 +38,7 @@ export default {
   methods: {
     getNotifications() {
       this.page++
-      return api.get("https://back-coin.herokuapp.com/transferencias", { params: { id:this.idUser, page: this.page } })
+      return api.get("https://back-coin.herokuapp.com/extrato", { params: { id:this.idUser, page: this.page } })
         .then((res) => {
           if (res.data.success) {
             this.notifications = this.notifications.concat(res.data.notifications)

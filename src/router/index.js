@@ -18,6 +18,18 @@ const routes = [
     beforeEnter: checkAuth,
   },
   {
+    path: '/extract',
+    name: 'Extract',
+    component: () => import('../views/Extract.vue'),
+    beforeEnter: checkAuth,
+  },
+  {
+    path: '/extract/:id',
+    name: 'Extract',
+    component: () => import('../views/Extract.vue'),
+    beforeEnter: checkAuth,
+  },
+  {
     path: '/store',
     name: 'Store',
     component: () => import('../views/Store.vue'),

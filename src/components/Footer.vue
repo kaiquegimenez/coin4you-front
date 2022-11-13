@@ -1,23 +1,27 @@
 <template>
   <div class="footer">
       <div @click="goTo('Home')" class="footer__icon">
-        <img src="../assets/icons/home.svg" width="30px" height="30px" alt="">
+        <img v-if="currentRoute !== 'Home'" src="../assets/icons/home.svg" width="30px" height="30px" alt="">
+        <img v-if="currentRoute === 'Home'" src="../assets/icons/home_yellow.svg" width="30px" height="30px" alt="">
         Início
       </div>
-      <div class="footer__icon">
-        <img src="../assets/icons/wallet.svg" width="30px" height="30px" alt="">
-        Carteira
+      <div v-if="!isAdmin" @click="goTo('Extract')" class="footer__icon">
+        <img v-if="!currentRoute.includes('Extract')" src="../assets/icons/wallet.svg" width="30px" height="30px" alt="">
+        <img v-if="currentRoute.includes('Extract')" src="../assets/icons/wallet_yellow.svg" width="30px" height="30px" alt="">
+        Extrato
       </div>
-      <div class="footer__pay">
+      <div v-if="!isAdmin" class="footer__pay">
         <img src="../assets/icons/kriptocoin.svg" alt="">
         Pagar
       </div>
       <div @click="goTo('Notifications')" class="footer__icon">
-        <img src="../assets/icons/notifications.svg" width="30px" height="30px" alt="">
+        <img v-if="currentRoute !== 'Notifications'" src="../assets/icons/notifications.svg" width="30px" height="30px" alt="">
+        <img v-if="currentRoute === 'Notifications'" src="../assets/icons/notifications_yellow.svg" width="30px" height="30px" alt="">
         Notificações
       </div>
-      <div @click="goTo('Store')" class="footer__icon">
-        <img src="../assets/icons/store.svg" width="30px" height="30px" alt="">
+      <div v-if="!isAdmin" @click="goTo('Store')" class="footer__icon">
+        <img v-if="currentRoute !== 'Store'" src="../assets/icons/store.svg" width="30px" height="30px" alt="">
+        <img v-if="currentRoute === 'Store'" src="../assets/icons/shopping_bag.svg" width="30px" height="30px" alt="">
         Loja
       </div>  
     </div>
@@ -26,11 +30,22 @@
 <script>
 export default {
   data() {
-    return {}
+    return {
+      currentRoute: '',
+      isAdmin: false
+    }
+  },
+  mounted() {
+    this.currentRoute = this.$router.currentRoute.name;
+    this.isAdmin = JSON.parse(localStorage.getItem("user")).roles === 'ADM' ? true : false;
   },
   methods: {
     goTo(name) {
-      this.$router.push({ name });
+      /* eslint-disable no-debugger */
+      if(name !== this.currentRoute) {
+        this.$router.push({ name });
+        this.currentRoute = name;
+      }
     }
   }
 }
