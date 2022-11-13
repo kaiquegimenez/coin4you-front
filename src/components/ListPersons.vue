@@ -10,6 +10,9 @@
         </div>
       </div>
       <div v-if="edit">
+        <button @click="extractUser()" class="button button__delete">
+          <img src="../assets/icons/wallet.svg" width="24px" height="24px" alt="">
+        </button>
         <button @click="editUser()" class="button button__money">
           <img src="../assets/icons/money.svg" width="24px" height="24px" alt="">
         </button>
@@ -80,8 +83,10 @@ export default {
       this.showDialog = true
     },
     confirmEdit() {
-      
       this.$emit('getUsers');
+    },
+    extractUser() {
+      this.$router.push({path: `extract/${this.person.id}`})     
     }
   },
 }
@@ -128,6 +133,8 @@ export default {
   .button {
     margin: 5px;
     border-radius: 50%;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
     &__money {
       border: 1px solid #f3c011;

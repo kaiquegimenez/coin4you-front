@@ -203,7 +203,7 @@ export default {
       this.$store.dispatch('toast/changeType', type)
     },
     confirmTransfer(value, description) {
-      return api.post("http://localhost:3000/coins/transfer", {idDestino: this.person.id, valor: parseInt(value), idUser: this.user.id, notificacao: description, enviadoEm: moment()})
+      return api.post("https://back-coin.herokuapp.com/coins/transfer", {idDestino: this.person.id, valor: parseInt(value), idUser: this.user.id, notificacao: description, enviadoEm: moment()})
         .then((res) => {
           if (res.data.success) {
             this.toast('Transferencia realizada com sucesso!', 'success')
