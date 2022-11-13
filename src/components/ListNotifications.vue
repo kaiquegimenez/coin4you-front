@@ -8,7 +8,7 @@
         </div>
         <div v-if="isAdmin" @click="showMoreDetails = true" class="list__text">
           <span> <b>Compra</b> </span>
-          <span class="list__message"> comprou {{notification.nome}}{{notification.notificacao}}, fazer o envio</span>
+          <span class="list__message">{{notification.nome}} comprou {{notification.notificacao}}, fazer o envio</span>
           <div class="list__date">
             <div>
               {{convertData()}}

@@ -12,7 +12,7 @@
 
           <div class="modal-body">
             <slot name="body"> 
-              <span>{{infos.nome}} {{infos.notificacao}}</span>
+              <span>{{infos.nome}} comprou {{infos.notificacao}}</span>
               <h3 style="margin: 5px 0">Dados de envio</h3>
               <span><b>Endereço:</b> {{infos.rua}}, {{infos.numero}} - {{infos.bairro}}, {{infos.cidade}}/{{infos.estado}} - {{infos.cep}}</span>
               <p style="margin: 5px 0"><b>Telefone de contato:</b> {{infos.telefone}}</p>
