@@ -5,12 +5,12 @@
         <img v-if="currentRoute === 'Home'" src="../assets/icons/home_yellow.svg" width="30px" height="30px" alt="">
         Início
       </div>
-      <div @click="goTo('Wallet')" class="footer__icon">
-        <img v-if="currentRoute !== 'Wallet'" src="../assets/icons/wallet.svg" width="30px" height="30px" alt="">
-        <img v-if="currentRoute === 'Wallet'" src="../assets/icons/wallet_yellow.svg" width="30px" height="30px" alt="">
+      <div v-if="!isAdmin" @click="goTo('Extract')" class="footer__icon">
+        <img v-if="!currentRoute.includes('Extract')" src="../assets/icons/wallet.svg" width="30px" height="30px" alt="">
+        <img v-if="currentRoute.includes('Extract')" src="../assets/icons/wallet_yellow.svg" width="30px" height="30px" alt="">
         Extrato
       </div>
-      <div class="footer__pay">
+      <div v-if="!isAdmin" class="footer__pay">
         <img src="../assets/icons/kriptocoin.svg" alt="">
         Pagar
       </div>
@@ -19,7 +19,7 @@
         <img v-if="currentRoute === 'Notifications'" src="../assets/icons/notifications_yellow.svg" width="30px" height="30px" alt="">
         Notificações
       </div>
-      <div @click="goTo('Store')" class="footer__icon">
+      <div v-if="!isAdmin" @click="goTo('Store')" class="footer__icon">
         <img v-if="currentRoute !== 'Store'" src="../assets/icons/store.svg" width="30px" height="30px" alt="">
         <img v-if="currentRoute === 'Store'" src="../assets/icons/shopping_bag.svg" width="30px" height="30px" alt="">
         Loja
@@ -31,8 +31,13 @@
 export default {
   data() {
     return {
-      currentRoute: 'Home'
+      currentRoute: '',
+      isAdmin: false
     }
+  },
+  mounted() {
+    this.currentRoute = this.$router.currentRoute.name;
+    this.isAdmin = JSON.parse(localStorage.getItem("user")).roles === 'ADM' ? true : false;
   },
   methods: {
     goTo(name) {
