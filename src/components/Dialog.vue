@@ -11,7 +11,7 @@
           </div>
 
           <div class="modal-body">
-            <slot name="body"> Digite o valor que deseja enviar para {{person.nome}} </slot>
+            <div name="body" id="nome">Digite o valor que deseja enviar para {{person.nome}}</div>
             <input class="input" type="number" placeholder="3000" v-model="value">
             <input class="input" type="text" placeholder="Obrigado pela ajuda" v-model="description">
           </div>

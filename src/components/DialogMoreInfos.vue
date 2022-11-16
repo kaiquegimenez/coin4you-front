@@ -12,10 +12,10 @@
 
           <div class="modal-body">
             <slot name="body"> 
-              <span>{{infos.nome}} comprou {{infos.notificacao}}</span>
+              <span id="name">{{infos.nome}} comprou {{infos.notificacao}}</span>
               <h3 style="margin: 5px 0">Dados de envio</h3>
-              <span><b>Endereço:</b> {{infos.rua}}, {{infos.numero}} - {{infos.bairro}}, {{infos.cidade}}/{{infos.estado}} - {{infos.cep}}</span>
-              <p style="margin: 5px 0"><b>Telefone de contato:</b> {{infos.telefone}}</p>
+              <span id="compra"><b>Endereço:</b> {{infos.rua}}, {{infos.numero}} - {{infos.bairro}}, {{infos.cidade}}/{{infos.estado}} - {{infos.cep}}</span>
+              <p style="margin: 5px 0" id="telefone"><b>Telefone de contato:</b> {{infos.telefone}}</p>
             </slot>
           </div>
 
@@ -70,8 +70,6 @@ export default {
   display: table;
   transition: opacity 0.3s ease;
 }
-
-
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
